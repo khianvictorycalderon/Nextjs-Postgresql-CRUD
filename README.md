@@ -13,3 +13,4 @@ This section is provided for reference only, to give you insight into how the pr
 
 ## Dependencies
 - `npm install pg`
+- `npm install --save-dev @types/pg`
