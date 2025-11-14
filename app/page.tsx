@@ -38,7 +38,7 @@ export default function App() {
         <form onSubmit={handleCreateUser} className="flex gap-2 mt-8">
           <label htmlFor={userNameInputField}><HeadingText>Create User (Username):</HeadingText></label>
           <input id={userNameInputField} name={userNameInputField} className="bg-gray-100 p-1 text-black rounded-md outline-none ring-blue-600 focus:ring-2" type="text" />
-          <button disabled={isSubmittingUserName} className="px-4 py-2 disabled:bg-gray-400 bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-500 transition duration-300" type="submit">Add New User</button>
+          <button disabled={isSubmittingUserName} className="px-4 py-2 disabled:bg-gray-400 disabled:text-gray-300 disabled:cursor-not-allowed bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-500 transition duration-300" type="submit">Add New User</button>
         </form>
 
       </SectionContainer>
