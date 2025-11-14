@@ -7,12 +7,12 @@ export async function DELETE(
     _req: NextRequest,
     { params }: { params: Promise<{ id: number }>}
 ) {
-    const { id } = await params;
-    dev.log(`ID parameter is ${id}`);
+    const { id: userId } = await params;
+    dev.log(`ID parameter is ${userId}`);
 
     try {
-        await pool.query("DELETE FROM users WHERE user_id = $1", [Number(id)]);
-        dev.log(`User with id ${id} successfully deleted!`);
+        await pool.query("DELETE FROM users WHERE user_id = $1", [Number(userId)]);
+        dev.log(`User with id ${userId} successfully deleted!`);
         return NextResponse.json({ message: "Successfully deleted user" }, { status: 200 });
     } catch (err: unknown) {
         return handleError(err, "Failed to delete this user");
