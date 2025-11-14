@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 export async function GET() {
     try {
         const results = await pool.query("SELECT * FROM users");
-        dev.log(`Successfully fetched users:\n ${results.rows}`)
+        dev.log(`Successfully fetched users:\n ${JSON.stringify(results.rows)}`)
         return NextResponse.json({ message: "Successfully fetched all users!", users: results.rows }, { status: 200 });
     } catch (err: unknown) {
         return handleError(err, "Failed to fetch all users");

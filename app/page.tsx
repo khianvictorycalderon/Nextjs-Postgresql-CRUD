@@ -50,6 +50,22 @@ export default function App() {
     }
   }
 
+  // For deleting a user
+  const handleDeleteUser = async (id: number) => {
+
+    // Ask to delete this user first
+    if(!confirm(`Are you sure you want to delete ${allUsers.find(item => item.user_id == id)?.user_name}?`)) return;
+
+    try {
+      await axios.delete(`/api/user/${id}`);
+      console.log("User deleted");
+    } catch (err: unknown) {
+      handleClientError(err, "Failed to delete user");
+    } finally {
+      await handleFetchAllUsers(); // Re-populate the table
+    }
+  }
+
   // Requests to the API to automatically create a table if not yet exists
   useEffect(() => {
     async function initialTableCreation() {
@@ -85,8 +101,8 @@ export default function App() {
                   <td>{item.user_id}</td>
                   <td>{item.user_name}</td>
                   <td className="flex gap-2 justify-center">
-                    <button className="py-2 px-4 rounded-md bg-green-600 cursor-pointer hover:bg-green-500 transition duration-300">Edit</button>
-                    <button className="py-2 px-4 rounded-md bg-red-600 cursor-pointer hover:bg-red-500 transition duration-300">Delete</button>
+                    <button onClick={() => {}} className="py-2 px-4 rounded-md bg-green-600 cursor-pointer hover:bg-green-500 transition duration-300">Edit</button>
+                    <button onClick={() => handleDeleteUser(item.user_id)} className="py-2 px-4 rounded-md bg-red-600 cursor-pointer hover:bg-red-500 transition duration-300">Delete</button>
                   </td>
                 </tr>
               ))}
