@@ -1,5 +1,5 @@
 import pool from "@/lib/db";
-import { dev } from "@/lib/dev-log";
+import dev from "@/lib/dev-log";
 import { NextResponse } from "next/server";
 
 // This code automatically creates table for the user if it still does not exist
