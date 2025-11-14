@@ -23,11 +23,13 @@ export default function App() {
     e.preventDefault(); // Stops the browser from refreshing
     
     const formData = new FormData(e.currentTarget);
-    const userName = formData.get(userNameInputField);
+    const userName = formData.get(userNameInputField) as string | null; // Casting it as string or null
 
-    alert(`New user name is ${userName}`);
+    if(!userName || userName.trim() == "") {
+      alert("User name cannot be empty!");
+    }
+
     e.currentTarget.reset(); // Clears the input field
-
   }
 
   return (
