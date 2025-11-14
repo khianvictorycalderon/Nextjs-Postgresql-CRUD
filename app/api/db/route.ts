@@ -10,7 +10,7 @@ export async function POST() {
             CREATE TABLE IF NOT EXISTS users (
                 user_id SERIAL PRIMARY KEY NOT NULL,
                 user_name VARCHAR(200)
-            )    ;
+            );
         `);
         dev.log("Table users successfully created!");
         return NextResponse.json({ message: "Table users successfully created!" }, { status: 200 })
