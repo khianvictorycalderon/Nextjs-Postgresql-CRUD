@@ -1,7 +1,10 @@
 'use client';
 import SectionContainer from "@/lib/section-container";
 import { HeadingText, HeroHeadingText } from "@/lib/typography";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+// Input field constant names
+const userNameInputField = "user_name";
 
 export default function App() {
 
@@ -15,11 +18,12 @@ export default function App() {
     initialTableCreation();
   },[]);
 
+  const [isSubmittingUserName, setIsSubmittingUserName] = useState<boolean>(false);
   const handleCreateUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Stops the browser from refreshing
     
     const formData = new FormData(e.currentTarget);
-    const userName = formData.get("user_name");
+    const userName = formData.get(userNameInputField);
 
     alert(`New user name is ${userName}`);
     e.currentTarget.reset(); // Clears the input field
@@ -32,9 +36,9 @@ export default function App() {
         <HeroHeadingText className="text-center">Next.js + Postgresql CRUD</HeroHeadingText>
         
         <form onSubmit={handleCreateUser} className="flex gap-2 mt-8">
-          <label><HeadingText>Create User (Username):</HeadingText></label>
-          <input name="user_name" className="bg-gray-100 p-1 text-black rounded-md outline-none ring-blue-600 focus:ring-2" type="text" />
-          <button className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-500 transition duration-300" type="submit">Add New User</button>
+          <label htmlFor={userNameInputField}><HeadingText>Create User (Username):</HeadingText></label>
+          <input id={userNameInputField} name={userNameInputField} className="bg-gray-100 p-1 text-black rounded-md outline-none ring-blue-600 focus:ring-2" type="text" />
+          <button disabled={isSubmittingUserName} className="px-4 py-2 disabled:bg-gray-400 bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-500 transition duration-300" type="submit">Add New User</button>
         </form>
 
       </SectionContainer>
