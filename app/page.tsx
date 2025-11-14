@@ -2,7 +2,7 @@
 import handleClientError from "@/lib/error-handling-client";
 import SectionContainer from "@/lib/section-container";
 import { AllUsersProps } from "@/lib/types";
-import { HeadingText, HeroHeadingText } from "@/lib/typography";
+import { BaseText, HeadingText, HeroHeadingText } from "@/lib/typography";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -70,22 +70,28 @@ export default function App() {
           <button disabled={isSubmittingUserName} className="px-4 py-2 disabled:bg-gray-400 disabled:text-gray-300 disabled:cursor-not-allowed bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-500 transition duration-300" type="submit">Add New User</button>
         </form>
 
-        <table className="mt-4 border-collapse [&_th]:border-1 [&_th]:p-2 [&_td]:text-center [&_td]:border-1 [&_td]:p-2 w-full">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>User Names</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allUsers.map((item, index) => (
-              <tr key={`${item.user_name}-${index}`}>
-                <td>{item.user_id}</td>
-                <td>{item.user_name}</td>
+        {allUsers.length > 0 ? (
+          <table className="mt-4 border-collapse [&_th]:border-1 [&_th]:p-2 [&_td]:text-center [&_td]:border-1 [&_td]:p-2 w-full">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>User Names</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {allUsers.map((item, index) => (
+                <tr key={`${item.user_name}-${index}`}>
+                  <td>{item.user_id}</td>
+                  <td>{item.user_name}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className="text-center">
+            <BaseText className="pt-8">Table has no data yet</BaseText>
+          </div>
+        )}
 
       </SectionContainer>
     </>
