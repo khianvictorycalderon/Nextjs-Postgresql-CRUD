@@ -1,4 +1,5 @@
 'use client';
+import handleClientError from "@/lib/error-handling-client";
 import SectionContainer from "@/lib/section-container";
 import { HeadingText, HeroHeadingText } from "@/lib/typography";
 import axios from "axios";
@@ -18,17 +19,29 @@ export default function App() {
   },[]);
 
   const [isSubmittingUserName, setIsSubmittingUserName] = useState<boolean>(false);
-  const handleCreateUser = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Stops the browser from refreshing
     
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const userName = formData.get(userNameInputField) as string | null; // Casting it as string or null
 
     if(!userName || userName.trim() == "") {
       alert("User name cannot be empty!");
+      return;
     }
 
-    e.currentTarget.reset(); // Clears the input field
+    setIsSubmittingUserName(true);
+
+    try {
+      await axios.post("/api/user", { userName: userName.trim() });
+      console.log("User successfully created!");
+    } catch (err: unknown) {
+      handleClientError(err, "Failed to create user");
+    } finally {
+      setIsSubmittingUserName(false);
+      form.reset(); // Clears the input field
+    }
   }
 
   return (
