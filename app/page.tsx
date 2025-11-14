@@ -1,6 +1,7 @@
 'use client';
 import SectionContainer from "@/lib/section-container";
 import { HeadingText, HeroHeadingText } from "@/lib/typography";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 // Input field constant names
@@ -11,9 +12,7 @@ export default function App() {
   // Requests to the API to automatically create a table if not yet exists
   useEffect(() => {
     async function initialTableCreation() {
-      await fetch("/api/db", {
-        method: "POST"
-      });
+      await axios.post("/api/db");
     }
     initialTableCreation();
   },[]);
