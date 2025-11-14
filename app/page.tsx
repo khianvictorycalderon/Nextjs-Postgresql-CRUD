@@ -74,8 +74,9 @@ export default function App() {
           <table className="mt-4 border-collapse [&_th]:border-1 [&_th]:p-2 [&_td]:text-center [&_td]:border-1 [&_td]:p-2 w-full">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>User Names</th>
+                <th className="w-1/6">ID</th>
+                <th className="w-4/6">User Names</th>
+                <th className="w-1/6">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -83,6 +84,10 @@ export default function App() {
                 <tr key={`${item.user_name}-${index}`}>
                   <td>{item.user_id}</td>
                   <td>{item.user_name}</td>
+                  <td className="flex gap-2 justify-center">
+                    <button className="py-2 px-4 rounded-md bg-green-600 cursor-pointer hover:bg-green-500 transition duration-300">Edit</button>
+                    <button className="py-2 px-4 rounded-md bg-red-600 cursor-pointer hover:bg-red-500 transition duration-300">Delete</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
