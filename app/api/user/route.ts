@@ -23,3 +23,14 @@ export async function POST(req: NextRequest) {
         return handleError(err, "Failed to create user");
     }
 }
+
+// Get all the users
+export async function GET() {
+    try {
+        const results = await pool.query("SELECT * FROM users");
+        dev.log(`Successfully fetched users:\n ${results.rows}`)
+        return NextResponse.json({ message: "Successfully fetched all users!", users: results.rows }, { status: 200 });
+    } catch (err: unknown) {
+        return handleError(err, "Failed to fetch all users");
+    }
+}
