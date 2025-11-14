@@ -5,10 +5,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
     _req: NextRequest,
-    { params }: { params: Promise<{ id: number }>}
+    { params }: { params: Promise<{ id: string }>}
 ) {
     const { id: userId } = await params;
-    if(isNaN(userId)) {
+    if(isNaN(Number(userId))) {
         dev.log("Invalid user id!");
         return NextResponse.json({ message: "Invalid user ID!" }, { status: 400 });
     }
@@ -26,12 +26,12 @@ export async function DELETE(
 
 export async function PATCH(
     req: NextRequest,
-    { params }: { params: Promise<{ id: number }>}
+    { params }: { params: Promise<{ id: string }>}
 ) {
     const { id: userId } = await params; // User ID
     const { newName } = await req.json(); // User's new name
 
-    if(isNaN(userId)) {
+    if(isNaN(Number(userId))) {
         dev.log("Invalid user id!");
         return NextResponse.json({ message: "Invalid user ID!" }, { status: 400 });
     }
