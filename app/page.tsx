@@ -1,8 +1,19 @@
 'use client';
 import SectionContainer from "@/lib/section-container";
 import { HeadingText, HeroHeadingText } from "@/lib/typography";
+import { useEffect } from "react";
 
 export default function App() {
+
+  // Requests to the API to automatically create a table if not yet exists
+  useEffect(() => {
+    async function initialTableCreation() {
+      await fetch("/api/db", {
+        method: "POST"
+      });
+    }
+    initialTableCreation();
+  },[]);
 
   const handleCreateUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Stops the browser from refreshing
