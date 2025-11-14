@@ -8,6 +8,10 @@ export async function DELETE(
     { params }: { params: Promise<{ id: number }>}
 ) {
     const { id: userId } = await params;
+    if(isNaN(userId)) {
+        dev.log("Invalid user id!");
+        return NextResponse.json({ message: "Invalid user ID!" }, { status: 400 });
+    }
     dev.log(`ID parameter is ${userId}`);
 
     try {
@@ -18,4 +22,33 @@ export async function DELETE(
         return handleError(err, "Failed to delete this user");
     }
 
+}
+
+export async function PATCH(
+    req: NextRequest,
+    { params }: { params: Promise<{ id: number }>}
+) {
+    const { id: userId } = await params; // User ID
+    const { newName } = await req.json(); // User's new name
+
+    if(isNaN(userId)) {
+        dev.log("Invalid user id!");
+        return NextResponse.json({ message: "Invalid user ID!" }, { status: 400 });
+    }
+
+    if(!newName || newName.trim() === "") {
+        dev.log("Invalid new user name!");
+        return NextResponse.json({ message: "Invalid new user's name!" }, { status: 400 });
+    }
+
+    dev.log(`ID: ${userId}`);
+    dev.log(`New user name: ${newName}`);
+
+    try {
+        await pool.query("UPDATE users SET user_name = $1 WHERE user_id = $2", [newName, userId]);
+        dev.log("User's name successfully updated!");
+        return NextResponse.json({ message: "User successfully deleted!"})
+    } catch (err: unknown) {
+        handleError(err, "Failed to update new user name");
+    }
 }
