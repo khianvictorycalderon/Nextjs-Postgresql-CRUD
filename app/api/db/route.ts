@@ -13,7 +13,7 @@ export async function POST() {
             );
         `);
         dev.log("Table users successfully created!");
-        return NextResponse.json({ message: "Table users successfully created!" }, { status: 200 })
+        return NextResponse.json({ message: "Table users successfully created!" }, { status: 201 })
     } catch (err: unknown) {
         return handleError(err, "Failed to create users table");
     }
