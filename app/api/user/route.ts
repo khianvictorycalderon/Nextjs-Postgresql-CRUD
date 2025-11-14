@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 // Get all the users
 export async function GET() {
     try {
-        const results = await pool.query("SELECT * FROM users");
+        const results = await pool.query("SELECT * FROM users ORDER BY user_name ASC");
         dev.log(`Successfully fetched users:\n ${JSON.stringify(results.rows)}`)
         return NextResponse.json({ message: "Successfully fetched all users!", users: results.rows }, { status: 200 });
     } catch (err: unknown) {
