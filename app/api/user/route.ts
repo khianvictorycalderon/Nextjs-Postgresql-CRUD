@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     try {
         await pool.query(`
            INSERT INTO users (user_name)
-           VALUES ($1)
+           VALUES ($1);
         `, [userName]);
         
         dev.log("User successfully created!");
