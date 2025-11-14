@@ -50,6 +50,24 @@ export default function App() {
     }
   }
 
+  // For editing a user's name
+  const handleEditUserName = async (id: number) => {
+
+    const newName = prompt(`Enter a new name for ${allUsers.find(item => item.user_id == id)?.user_name}: `);
+    if (!newName || newName.trim() === "") {
+      alert("New user's name cannot be empty!");
+      return;
+    }
+
+    try {
+      await axios.patch(`/api/user/${id}`, { newName });
+      await handleFetchAllUsers();
+    } catch (err: unknown) {
+      handleClientError(err, "Failed to update user's name");
+    }
+
+  }
+
   // For deleting a user
   const handleDeleteUser = async (id: number) => {
 
@@ -59,10 +77,9 @@ export default function App() {
     try {
       await axios.delete(`/api/user/${id}`);
       console.log("User deleted");
+      await handleFetchAllUsers();
     } catch (err: unknown) {
       handleClientError(err, "Failed to delete user");
-    } finally {
-      await handleFetchAllUsers(); // Re-populate the table
     }
   }
 
@@ -101,7 +118,7 @@ export default function App() {
                   <td>{item.user_id}</td>
                   <td>{item.user_name}</td>
                   <td className="flex gap-2 justify-center">
-                    <button onClick={() => {}} className="py-2 px-4 rounded-md bg-green-600 cursor-pointer hover:bg-green-500 transition duration-300">Edit</button>
+                    <button onClick={() => handleEditUserName(item.user_id)} className="py-2 px-4 rounded-md bg-green-600 cursor-pointer hover:bg-green-500 transition duration-300">Edit</button>
                     <button onClick={() => handleDeleteUser(item.user_id)} className="py-2 px-4 rounded-md bg-red-600 cursor-pointer hover:bg-red-500 transition duration-300">Delete</button>
                   </td>
                 </tr>
